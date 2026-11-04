@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.egg-info/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+/fraud_oracle.csv
+data/raw/
+data/processed/*.joblib
+data/processed/archive/

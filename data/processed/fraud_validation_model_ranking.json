@@ -1,0 +1,1115 @@
+{
+  "status": "exploratory validation-only comparison",
+  "target": "FraudFound_P",
+  "target_semantics_note": "The meaning of FraudFound_P is undocumented. Results predict the dataset's recorded label only; they are not evidence of confirmed fraud or real-world fraud detection.",
+  "feature_timing_note": "The timing of the claim-timing review fields is undocumented and unverified; the reduced feature set omits them.",
+  "source_csv": "data/raw/fraud_oracle.csv",
+  "source_sha256": "8b6aa59764ef4f8b058598d3e8f325ef3623f52f4b1cd4ef946baebb5ccfa9a6",
+  "split_manifest": "data/processed/fraud_split_manifest.json",
+  "split_seed": 42,
+  "partitions_used": {
+    "train_rows": 10794,
+    "validation_rows": 2313,
+    "test_used": false
+  },
+  "threshold_selection_rule": "For each model, maximize validation F1 for the positive label; choose the highest threshold among ties.",
+  "ranking_metric": "validation average precision (average precision summarizes ranking across thresholds)",
+  "validation_rows_predicted_Y_percentage_denominator": 2313,
+  "model_ranking": [
+    "reduced_catboost",
+    "full_catboost",
+    "full_xgboost",
+    "stacking_xgb_rf",
+    "reduced_xgboost_shap_pruned",
+    "reduced_xgboost",
+    "reduced_random_forest",
+    "full_random_forest",
+    "reduced_logistic",
+    "full_logistic"
+  ],
+  "models": {
+    "full_logistic": {
+      "model": "logistic_regression",
+      "feature_set": "full_33",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.16810344827586207,
+        "recall_Y": 0.5611510791366906,
+        "f1_Y": 0.25870646766169153,
+        "average_precision": 0.1480665661260451,
+        "selected_threshold_for_Y": 0.675272255320732,
+        "validation_rows_predicted_Y": 464,
+        "validation_rows_predicted_Y_percent": 20.060527453523562,
+        "validation_false_positive_count": 386
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.675272255320732,
+        "threshold_recall_70": 0.6342223140546626,
+        "threshold_precision_30": null,
+        "threshold_cost_optimal": 0.20069637832290052,
+        "partition": "validation only",
+        "notes": {
+          "threshold_precision_30": "No validation threshold reaches precision >= 0.3."
+        },
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.675272255320732,
+            "precision": 0.16810344827586207,
+            "recall": 0.5611510791366906,
+            "f1": 0.25870646766169153,
+            "rows_flagged": 464,
+            "false_positive_count": 386,
+            "false_negative_count": 61
+          },
+          "threshold_recall_70": {
+            "threshold": 0.6342223140546626,
+            "precision": 0.14893617021276595,
+            "recall": 0.7050359712230215,
+            "f1": 0.24592220828105396,
+            "rows_flagged": 658,
+            "false_positive_count": 560,
+            "false_negative_count": 41
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.20069637832290052,
+            "precision": 0.11306532663316583,
+            "recall": 0.9712230215827338,
+            "f1": 0.20255063765941486,
+            "rows_flagged": 1194,
+            "false_positive_count": 1059,
+            "false_negative_count": 4
+          }
+        }
+      },
+      "review_feature_timing": [
+        {
+          "column": "WeekOfMonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "MonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "DayOfWeekClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "Days_Policy_Claim",
+          "timing": "unverified"
+        }
+      ],
+      "average_precision_rank": 10
+    },
+    "full_random_forest": {
+      "model": "random_forest",
+      "feature_set": "full_33",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.17296222664015903,
+        "recall_Y": 0.6258992805755396,
+        "f1_Y": 0.27102803738317754,
+        "average_precision": 0.18395188227466475,
+        "selected_threshold_for_Y": 0.49233184969324634,
+        "validation_rows_predicted_Y": 503,
+        "validation_rows_predicted_Y_percent": 21.746649373108518,
+        "validation_false_positive_count": 416
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.49233184969324634,
+        "threshold_recall_70": 0.4612715533013328,
+        "threshold_precision_30": 0.7722136223852846,
+        "threshold_cost_optimal": 0.10434131025926874,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.49233184969324634,
+            "precision": 0.17296222664015903,
+            "recall": 0.6258992805755396,
+            "f1": 0.27102803738317754,
+            "rows_flagged": 503,
+            "false_positive_count": 416,
+            "false_negative_count": 52
+          },
+          "threshold_recall_70": {
+            "threshold": 0.4612715533013328,
+            "precision": 0.1617161716171617,
+            "recall": 0.7050359712230215,
+            "f1": 0.26308724832214764,
+            "rows_flagged": 606,
+            "false_positive_count": 508,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.7722136223852846,
+            "precision": 0.3333333333333333,
+            "recall": 0.007194244604316547,
+            "f1": 0.014084507042253521,
+            "rows_flagged": 3,
+            "false_positive_count": 2,
+            "false_negative_count": 138
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.10434131025926874,
+            "precision": 0.11739502999143102,
+            "recall": 0.9856115107913669,
+            "f1": 0.20980091883614088,
+            "rows_flagged": 1167,
+            "false_positive_count": 1030,
+            "false_negative_count": 2
+          }
+        }
+      },
+      "review_feature_timing": [
+        {
+          "column": "WeekOfMonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "MonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "DayOfWeekClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "Days_Policy_Claim",
+          "timing": "unverified"
+        }
+      ],
+      "average_precision_rank": 8
+    },
+    "full_xgboost": {
+      "model": "xgboost",
+      "feature_set": "full_33",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.20833333333333334,
+        "recall_Y": 0.5755395683453237,
+        "f1_Y": 0.30592734225621415,
+        "average_precision": 0.25106948579169835,
+        "selected_threshold_for_Y": 0.4302803575992584,
+        "validation_rows_predicted_Y": 384,
+        "validation_rows_predicted_Y_percent": 16.601815823605705,
+        "validation_false_positive_count": 304
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.4302803575992584,
+        "threshold_recall_70": 0.28961142897605896,
+        "threshold_precision_30": 0.7592200040817261,
+        "threshold_cost_optimal": 0.03533947095274925,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.4302803575992584,
+            "precision": 0.20833333333333334,
+            "recall": 0.5755395683453237,
+            "f1": 0.30592734225621415,
+            "rows_flagged": 384,
+            "false_positive_count": 304,
+            "false_negative_count": 59
+          },
+          "threshold_recall_70": {
+            "threshold": 0.28961142897605896,
+            "precision": 0.1686746987951807,
+            "recall": 0.7050359712230215,
+            "f1": 0.2722222222222222,
+            "rows_flagged": 581,
+            "false_positive_count": 483,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.7592200040817261,
+            "precision": 0.3,
+            "recall": 0.12949640287769784,
+            "f1": 0.18090452261306533,
+            "rows_flagged": 60,
+            "false_positive_count": 42,
+            "false_negative_count": 121
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.03533947095274925,
+            "precision": 0.11604095563139932,
+            "recall": 0.9784172661870504,
+            "f1": 0.20747520976353928,
+            "rows_flagged": 1172,
+            "false_positive_count": 1036,
+            "false_negative_count": 3
+          }
+        }
+      },
+      "review_feature_timing": [
+        {
+          "column": "WeekOfMonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "MonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "DayOfWeekClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "Days_Policy_Claim",
+          "timing": "unverified"
+        }
+      ],
+      "average_precision_rank": 3
+    },
+    "full_catboost": {
+      "model": "catboost",
+      "feature_set": "full_33",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.21666666666666667,
+        "recall_Y": 0.5611510791366906,
+        "f1_Y": 0.312625250501002,
+        "average_precision": 0.2537640469367515,
+        "selected_threshold_for_Y": 0.6169447983615053,
+        "validation_rows_predicted_Y": 360,
+        "validation_rows_predicted_Y_percent": 15.56420233463035,
+        "validation_false_positive_count": 282
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.6169447983615053,
+        "threshold_recall_70": 0.5426295917608736,
+        "threshold_precision_30": 0.7431187129931806,
+        "threshold_cost_optimal": 0.3599310844185588,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.6169447983615053,
+            "precision": 0.21666666666666667,
+            "recall": 0.5611510791366906,
+            "f1": 0.312625250501002,
+            "rows_flagged": 360,
+            "false_positive_count": 282,
+            "false_negative_count": 61
+          },
+          "threshold_recall_70": {
+            "threshold": 0.5426295917608736,
+            "precision": 0.1728395061728395,
+            "recall": 0.7050359712230215,
+            "f1": 0.2776203966005666,
+            "rows_flagged": 567,
+            "false_positive_count": 469,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.7431187129931806,
+            "precision": 0.30097087378640774,
+            "recall": 0.22302158273381295,
+            "f1": 0.256198347107438,
+            "rows_flagged": 103,
+            "false_positive_count": 72,
+            "false_negative_count": 108
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.3599310844185588,
+            "precision": 0.13909378292939936,
+            "recall": 0.9496402877697842,
+            "f1": 0.2426470588235294,
+            "rows_flagged": 949,
+            "false_positive_count": 817,
+            "false_negative_count": 7
+          }
+        }
+      },
+      "review_feature_timing": [
+        {
+          "column": "WeekOfMonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "MonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "DayOfWeekClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "Days_Policy_Claim",
+          "timing": "unverified"
+        }
+      ],
+      "average_precision_rank": 2
+    },
+    "reduced_logistic": {
+      "model": "logistic_regression",
+      "feature_set": "no_claim_timing_29",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.1629327902240326,
+        "recall_Y": 0.5755395683453237,
+        "f1_Y": 0.25396825396825395,
+        "average_precision": 0.1499249676166336,
+        "selected_threshold_for_Y": 0.670118663255813,
+        "validation_rows_predicted_Y": 491,
+        "validation_rows_predicted_Y_percent": 21.227842628620838,
+        "validation_false_positive_count": 411
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.670118663255813,
+        "threshold_recall_70": 0.635201015107037,
+        "threshold_precision_30": null,
+        "threshold_cost_optimal": 0.2187143481058418,
+        "partition": "validation only",
+        "notes": {
+          "threshold_precision_30": "No validation threshold reaches precision >= 0.3."
+        },
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.670118663255813,
+            "precision": 0.1629327902240326,
+            "recall": 0.5755395683453237,
+            "f1": 0.25396825396825395,
+            "rows_flagged": 491,
+            "false_positive_count": 411,
+            "false_negative_count": 59
+          },
+          "threshold_recall_70": {
+            "threshold": 0.635201015107037,
+            "precision": 0.15007656967840735,
+            "recall": 0.7050359712230215,
+            "f1": 0.2474747474747475,
+            "rows_flagged": 653,
+            "false_positive_count": 555,
+            "false_negative_count": 41
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.2187143481058418,
+            "precision": 0.11499148211243612,
+            "recall": 0.9712230215827338,
+            "f1": 0.20563594821020564,
+            "rows_flagged": 1174,
+            "false_positive_count": 1039,
+            "false_negative_count": 4
+          }
+        }
+      },
+      "review_feature_timing": [],
+      "average_precision_rank": 9
+    },
+    "reduced_random_forest": {
+      "model": "random_forest",
+      "feature_set": "no_claim_timing_29",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.18181818181818182,
+        "recall_Y": 0.5755395683453237,
+        "f1_Y": 0.2763385146804836,
+        "average_precision": 0.21691486578426047,
+        "selected_threshold_for_Y": 0.5245879989492895,
+        "validation_rows_predicted_Y": 440,
+        "validation_rows_predicted_Y_percent": 19.022913964548206,
+        "validation_false_positive_count": 360
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.5245879989492895,
+        "threshold_recall_70": 0.4703749541546124,
+        "threshold_precision_30": 0.663395662582566,
+        "threshold_cost_optimal": 0.19194761509646252,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.5245879989492895,
+            "precision": 0.18181818181818182,
+            "recall": 0.5755395683453237,
+            "f1": 0.2763385146804836,
+            "rows_flagged": 440,
+            "false_positive_count": 360,
+            "false_negative_count": 59
+          },
+          "threshold_recall_70": {
+            "threshold": 0.4703749541546124,
+            "precision": 0.1550632911392405,
+            "recall": 0.7050359712230215,
+            "f1": 0.25421530479896237,
+            "rows_flagged": 632,
+            "false_positive_count": 534,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.663395662582566,
+            "precision": 0.3010752688172043,
+            "recall": 0.2014388489208633,
+            "f1": 0.2413793103448276,
+            "rows_flagged": 93,
+            "false_positive_count": 65,
+            "false_negative_count": 111
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.19194761509646252,
+            "precision": 0.12352406902815623,
+            "recall": 0.9784172661870504,
+            "f1": 0.21935483870967742,
+            "rows_flagged": 1101,
+            "false_positive_count": 965,
+            "false_negative_count": 3
+          }
+        }
+      },
+      "review_feature_timing": [],
+      "average_precision_rank": 7
+    },
+    "reduced_xgboost": {
+      "model": "xgboost",
+      "feature_set": "no_claim_timing_29",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.22318840579710145,
+        "recall_Y": 0.5539568345323741,
+        "f1_Y": 0.3181818181818182,
+        "average_precision": 0.23821893483344309,
+        "selected_threshold_for_Y": 0.5005687475204468,
+        "validation_rows_predicted_Y": 345,
+        "validation_rows_predicted_Y_percent": 14.915693904020753,
+        "validation_false_positive_count": 268
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.5005687475204468,
+        "threshold_recall_70": 0.3291064500808716,
+        "threshold_precision_30": 0.7582537531852722,
+        "threshold_cost_optimal": 0.05233840271830559,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.5005687475204468,
+            "precision": 0.22318840579710145,
+            "recall": 0.5539568345323741,
+            "f1": 0.3181818181818182,
+            "rows_flagged": 345,
+            "false_positive_count": 268,
+            "false_negative_count": 62
+          },
+          "threshold_recall_70": {
+            "threshold": 0.3291064500808716,
+            "precision": 0.1680960548885077,
+            "recall": 0.7050359712230215,
+            "f1": 0.27146814404432135,
+            "rows_flagged": 583,
+            "false_positive_count": 485,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.7582537531852722,
+            "precision": 0.3,
+            "recall": 0.17266187050359713,
+            "f1": 0.2191780821917808,
+            "rows_flagged": 80,
+            "false_positive_count": 56,
+            "false_negative_count": 115
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.05233840271830559,
+            "precision": 0.12142857142857143,
+            "recall": 0.9784172661870504,
+            "f1": 0.21604447974583002,
+            "rows_flagged": 1120,
+            "false_positive_count": 984,
+            "false_negative_count": 3
+          }
+        }
+      },
+      "review_feature_timing": [],
+      "average_precision_rank": 6
+    },
+    "reduced_catboost": {
+      "model": "catboost",
+      "feature_set": "no_claim_timing_29",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.2540322580645161,
+        "recall_Y": 0.45323741007194246,
+        "f1_Y": 0.32558139534883723,
+        "average_precision": 0.25931778693703655,
+        "selected_threshold_for_Y": 0.6785349705225738,
+        "validation_rows_predicted_Y": 248,
+        "validation_rows_predicted_Y_percent": 10.722006052745352,
+        "validation_false_positive_count": 185
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.6785349705225738,
+        "threshold_recall_70": 0.5952636630348828,
+        "threshold_precision_30": 0.7712076138132975,
+        "threshold_cost_optimal": 0.2582839903728152,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.6785349705225738,
+            "precision": 0.2540322580645161,
+            "recall": 0.45323741007194246,
+            "f1": 0.32558139534883723,
+            "rows_flagged": 248,
+            "false_positive_count": 185,
+            "false_negative_count": 76
+          },
+          "threshold_recall_70": {
+            "threshold": 0.5952636630348828,
+            "precision": 0.1895551257253385,
+            "recall": 0.7050359712230215,
+            "f1": 0.29878048780487804,
+            "rows_flagged": 517,
+            "false_positive_count": 419,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.7712076138132975,
+            "precision": 0.3026315789473684,
+            "recall": 0.16546762589928057,
+            "f1": 0.21395348837209302,
+            "rows_flagged": 76,
+            "false_positive_count": 53,
+            "false_negative_count": 116
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.2582839903728152,
+            "precision": 0.1287223823246878,
+            "recall": 0.9640287769784173,
+            "f1": 0.2271186440677966,
+            "rows_flagged": 1041,
+            "false_positive_count": 907,
+            "false_negative_count": 5
+          }
+        }
+      },
+      "review_feature_timing": [],
+      "average_precision_rank": 1
+    },
+    "reduced_xgboost_shap_pruned": {
+      "model": "xgboost",
+      "feature_set": "shap_pruned_24",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "high_driver_rating",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.2277580071174377,
+        "recall_Y": 0.460431654676259,
+        "f1_Y": 0.3047619047619048,
+        "average_precision": 0.2397554900073942,
+        "selected_threshold_for_Y": 0.5383397936820984,
+        "validation_rows_predicted_Y": 281,
+        "validation_rows_predicted_Y_percent": 12.148724600086467,
+        "validation_false_positive_count": 217
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.5383397936820984,
+        "threshold_recall_70": 0.3344266712665558,
+        "threshold_precision_30": 0.8058118224143982,
+        "threshold_cost_optimal": 0.026242418214678764,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.5383397936820984,
+            "precision": 0.2277580071174377,
+            "recall": 0.460431654676259,
+            "f1": 0.3047619047619048,
+            "rows_flagged": 281,
+            "false_positive_count": 217,
+            "false_negative_count": 75
+          },
+          "threshold_recall_70": {
+            "threshold": 0.3344266712665558,
+            "precision": 0.1785063752276867,
+            "recall": 0.7050359712230215,
+            "f1": 0.28488372093023256,
+            "rows_flagged": 549,
+            "false_positive_count": 451,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.8058118224143982,
+            "precision": 0.30434782608695654,
+            "recall": 0.10071942446043165,
+            "f1": 0.15135135135135136,
+            "rows_flagged": 46,
+            "false_positive_count": 32,
+            "false_negative_count": 125
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.026242418214678764,
+            "precision": 0.10825545171339564,
+            "recall": 1.0,
+            "f1": 0.19536191145467321,
+            "rows_flagged": 1284,
+            "false_positive_count": 1145,
+            "false_negative_count": 0
+          }
+        }
+      },
+      "review_feature_timing": [],
+      "average_precision_rank": 5
+    },
+    "stacking_xgb_rf": {
+      "model": "stacking",
+      "feature_set": "full_xgboost+reduced_random_forest",
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "VehicleCategory",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "threshold_rule": "maximize validation F1 for the positive label; choose the highest threshold among ties",
+      "validation_metrics": {
+        "precision_Y": 0.23921568627450981,
+        "recall_Y": 0.43884892086330934,
+        "f1_Y": 0.3096446700507614,
+        "average_precision": 0.24179689926780773,
+        "selected_threshold_for_Y": 0.7816207964194768,
+        "validation_rows_predicted_Y": 255,
+        "validation_rows_predicted_Y_percent": 11.024643320363165,
+        "validation_false_positive_count": 194
+      },
+      "threshold_options": {
+        "threshold_max_f1": 0.7816207964194768,
+        "threshold_recall_70": 0.6288571445209414,
+        "threshold_precision_30": 0.8751318232014372,
+        "threshold_cost_optimal": 0.22204232171349417,
+        "partition": "validation only",
+        "notes": {},
+        "validation_performance": {
+          "threshold_max_f1": {
+            "threshold": 0.7816207964194768,
+            "precision": 0.23921568627450981,
+            "recall": 0.43884892086330934,
+            "f1": 0.3096446700507614,
+            "rows_flagged": 255,
+            "false_positive_count": 194,
+            "false_negative_count": 78
+          },
+          "threshold_recall_70": {
+            "threshold": 0.6288571445209414,
+            "precision": 0.16039279869067102,
+            "recall": 0.7050359712230215,
+            "f1": 0.2613333333333333,
+            "rows_flagged": 611,
+            "false_positive_count": 513,
+            "false_negative_count": 41
+          },
+          "threshold_precision_30": {
+            "threshold": 0.8751318232014372,
+            "precision": 0.3,
+            "recall": 0.19424460431654678,
+            "f1": 0.23580786026200873,
+            "rows_flagged": 90,
+            "false_positive_count": 63,
+            "false_negative_count": 112
+          },
+          "threshold_cost_optimal": {
+            "threshold": 0.22204232171349417,
+            "precision": 0.12263300270513977,
+            "recall": 0.9784172661870504,
+            "f1": 0.21794871794871795,
+            "rows_flagged": 1109,
+            "false_positive_count": 973,
+            "false_negative_count": 3
+          }
+        }
+      },
+      "review_feature_timing": [
+        {
+          "column": "WeekOfMonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "MonthClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "DayOfWeekClaimed",
+          "timing": "unverified"
+        },
+        {
+          "column": "Days_Policy_Claim",
+          "timing": "unverified"
+        }
+      ],
+      "average_precision_rank": 4
+    }
+  },
+  "highest_validation_average_precision_model": "reduced_catboost",
+  "winner_validation_metrics": {
+    "precision_Y": 0.2540322580645161,
+    "recall_Y": 0.45323741007194246,
+    "f1_Y": 0.32558139534883723,
+    "average_precision": 0.25931778693703655,
+    "selected_threshold_for_Y": 0.6785349705225738,
+    "validation_rows_predicted_Y": 248,
+    "validation_rows_predicted_Y_percent": 10.722006052745352,
+    "validation_false_positive_count": 185
+  },
+  "model_artifacts": {
+    "full_logistic": "data/processed/fraud_ranked_full_logistic.joblib",
+    "full_random_forest": "data/processed/fraud_ranked_full_random_forest.joblib",
+    "full_xgboost": "data/processed/fraud_ranked_full_xgboost.joblib",
+    "full_catboost": "data/processed/fraud_ranked_full_catboost.joblib",
+    "reduced_logistic": "data/processed/fraud_ranked_reduced_logistic.joblib",
+    "reduced_random_forest": "data/processed/fraud_ranked_reduced_random_forest.joblib",
+    "reduced_xgboost": "data/processed/fraud_ranked_reduced_xgboost.joblib",
+    "reduced_catboost": "data/processed/fraud_ranked_reduced_catboost.joblib",
+    "reduced_xgboost_shap_pruned": "data/processed/fraud_ranked_reduced_xgboost_shap_pruned.joblib",
+    "stacking_xgb_rf": "data/processed/fraud_ranked_stacking_xgb_rf.joblib"
+  },
+  "shap_importance_report": "data/processed/fraud_shap_importance.json",
+  "shap_pruning": {
+    "explained_model": "full_xgboost",
+    "bottom_fraction": 0.2,
+    "bottom_features": [
+      "Days_Policy_Accident",
+      "PoliceReportFiled",
+      "address_changed_recently",
+      "no_witness",
+      "Days_Policy_Claim",
+      "WitnessPresent"
+    ],
+    "removed_from_reduced_xgboost": [
+      "Days_Policy_Accident",
+      "no_witness",
+      "address_changed_recently",
+      "PoliceReportFiled",
+      "WitnessPresent"
+    ],
+    "old_validation_average_precision": 0.23821893483344309,
+    "new_validation_average_precision": 0.2397554900073942,
+    "note": "Features were chosen using validation rows and rescored on those rows, so the new AP may be optimistic."
+  },
+  "prohibited_features": [
+    "FraudFound_P",
+    "MaritalStatus",
+    "PolicyNumber",
+    "RepNumber",
+    "Sex"
+  ],
+  "demographic_features_excluded": true,
+  "false_alarm_tradeoff_note": "Higher precision can result from flagging fewer rows; recall measures the share of positive validation rows that were found. Report flagged-row count and percentage with these metrics.",
+  "validation_caveat": "Thresholds and models are compared on the same validation split, so ranked validation results may be optimistic.",
+  "test_partition_used_for_fit_selection_threshold_or_metrics": false
+}

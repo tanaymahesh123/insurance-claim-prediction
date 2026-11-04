@@ -1,0 +1,62 @@
+[
+  {
+    "feature": "fault_policy_holder",
+    "mean_abs_shap": 1.0247697830200195
+  },
+  {
+    "feature": "BasePolicy",
+    "mean_abs_shap": 0.7864566445350647
+  },
+  {
+    "feature": "Age",
+    "mean_abs_shap": 0.3506166934967041
+  },
+  {
+    "feature": "Fault",
+    "mean_abs_shap": 0.2923067510128021
+  },
+  {
+    "feature": "Month",
+    "mean_abs_shap": 0.2674107551574707
+  },
+  {
+    "feature": "Year",
+    "mean_abs_shap": 0.23549862205982208
+  },
+  {
+    "feature": "PolicyType",
+    "mean_abs_shap": 0.2187834531068802
+  },
+  {
+    "feature": "MonthClaimed",
+    "mean_abs_shap": 0.19689789414405823
+  },
+  {
+    "feature": "Make",
+    "mean_abs_shap": 0.1901819407939911
+  },
+  {
+    "feature": "Deductible",
+    "mean_abs_shap": 0.17170239984989166
+  },
+  {
+    "feature": "DayOfWeek",
+    "mean_abs_shap": 0.1575801819562912
+  },
+  {
+    "feature": "DayOfWeekClaimed",
+    "mean_abs_shap": 0.15183424949645996
+  },
+  {
+    "feature": "DriverRating",
+    "mean_abs_shap": 0.13791067898273468
+  },
+  {
+    "feature": "WeekOfMonth",
+    "mean_abs_shap": 0.13496087491512299
+  },
+  {
+    "feature": "WeekOfMonthClaimed",
+    "mean_abs_shap": 0.1347046047449112
+  }
+]

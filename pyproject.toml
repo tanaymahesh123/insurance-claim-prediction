@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "insurance-claim-prediction"
+version = "0.1.0"
+description = "Educational baseline for explainable claim severity and fraud risk prediction"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scikit-learn>=1.3",
+  "streamlit>=1.36",
+  "xgboost>=2.0",
+  "shap>=0.45",
+  "catboost>=1.2",
+]
+
+[project.scripts]
+insurance-claims-check = "insurance_claims.cli:main"
+insurance-claims-prepare = "insurance_claims.prepare_cli:main"
+insurance-claims-train = "insurance_claims.train_cli:main"
+insurance-claims-compare = "insurance_claims.compare_cli:main"
+insurance-claims-rank = "insurance_claims.feature_set_compare_cli:main"
+insurance-claims-specialists = "insurance_claims.incident_specialists_cli:main"
+insurance-claims-specialist-error-experiments = "insurance_claims.specialist_error_experiments_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+
+
+
+
+

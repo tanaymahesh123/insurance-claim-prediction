@@ -1,0 +1,215 @@
+{
+  "task": "classification of the dataset's recorded FraudFound_P label",
+  "target": "FraudFound_P",
+  "target_values": [
+    "0",
+    "1"
+  ],
+  "target_counts": {
+    "0": 14497,
+    "1": 923
+  },
+  "target_semantics_note": "Label meaning is undocumented; results are predictions of the recorded label and must not be described as confirmed fraud or real-world fraud risk.",
+  "source_csv": "data/raw/fraud_oracle.csv",
+  "source_sha256": "8b6aa59764ef4f8b058598d3e8f325ef3623f52f4b1cd4ef946baebb5ccfa9a6",
+  "split_manifest": "data/processed/fraud_split_manifest.json",
+  "split_seed": 42,
+  "split_proportions": {
+    "train": 0.7,
+    "validation": 0.15,
+    "test": 0.15
+  },
+  "split_row_counts": {
+    "train": 10794,
+    "validation": 2313,
+    "test": 2313
+  },
+  "input_features": [
+    "Age",
+    "Deductible",
+    "DriverRating",
+    "WeekOfMonth",
+    "WeekOfMonthClaimed",
+    "Year",
+    "VehiclePrice",
+    "Days_Policy_Accident",
+    "Days_Policy_Claim",
+    "PastNumberOfClaims",
+    "AgeOfVehicle",
+    "AgeOfPolicyHolder",
+    "NumberOfSuppliments",
+    "AddressChange_Claim",
+    "NumberOfCars",
+    "fault_policy_holder",
+    "no_police_report",
+    "no_witness",
+    "high_driver_rating",
+    "address_changed_recently",
+    "Make",
+    "AccidentArea",
+    "Fault",
+    "PolicyType",
+    "VehicleCategory",
+    "PoliceReportFiled",
+    "WitnessPresent",
+    "AgentType",
+    "BasePolicy",
+    "Month",
+    "DayOfWeek",
+    "MonthClaimed",
+    "DayOfWeekClaimed"
+  ],
+  "excluded_features": [
+    "PolicyNumber",
+    "RepNumber",
+    "Sex",
+    "MaritalStatus"
+  ],
+  "feature_availability_note": "Availability and timing of these inputs at the intended prediction moment are unverified; see availability_review_fields in the split manifest.",
+  "preprocessing": {
+    "fit_partition": "train",
+    "numeric_imputation": "training median",
+    "scaling": "training mean and standard deviation",
+    "ordinal": "mapped to integers in the configured order, then treated as numeric",
+    "categorical": "ordinal encoded; unknown categories become -1",
+    "validation_or_test_used_in_fit": false
+  },
+  "baseline_model": "LogisticRegression with class_weight='balanced'",
+  "baseline_comparison": "DummyClassifier(strategy='most_frequent') fitted on training labels",
+  "threshold_selection": {
+    "partition": "validation only",
+    "criterion": "maximum F1 for the positive label",
+    "tie_break": "highest threshold among tied maximum validation F1 values",
+    "selected_threshold": 0.675272255320732,
+    "validation_f1_Y": 0.25870646766169153
+  },
+  "threshold_options": {
+    "threshold_max_f1": 0.675272255320732,
+    "threshold_recall_70": 0.6342223140546626,
+    "threshold_precision_30": null,
+    "threshold_cost_optimal": 0.20069637832290052,
+    "partition": "validation only",
+    "notes": {
+      "threshold_precision_30": "No validation threshold reaches precision >= 0.3."
+    },
+    "validation_performance": {
+      "threshold_max_f1": {
+        "threshold": 0.675272255320732,
+        "precision": 0.16810344827586207,
+        "recall": 0.5611510791366906,
+        "f1": 0.25870646766169153,
+        "rows_flagged": 464,
+        "false_positive_count": 386,
+        "false_negative_count": 61
+      },
+      "threshold_recall_70": {
+        "threshold": 0.6342223140546626,
+        "precision": 0.14893617021276595,
+        "recall": 0.7050359712230215,
+        "f1": 0.24592220828105396,
+        "rows_flagged": 658,
+        "false_positive_count": 560,
+        "false_negative_count": 41
+      },
+      "threshold_cost_optimal": {
+        "threshold": 0.20069637832290052,
+        "precision": 0.11306532663316583,
+        "recall": 0.9712230215827338,
+        "f1": 0.20255063765941486,
+        "rows_flagged": 1194,
+        "false_positive_count": 1059,
+        "false_negative_count": 4
+      }
+    }
+  },
+  "cross_validation": {
+    "folds": 5,
+    "partition": "training rows only",
+    "f1_threshold": "model default of 0.5",
+    "mean_average_precision": 0.143697961219425,
+    "std_average_precision": 0.013249802510894216,
+    "mean_f1": 0.21423911550195282,
+    "std_f1": 0.006202926896736645
+  },
+  "nested_cv": {
+    "model": "LogisticRegression baseline",
+    "outer_folds": 5,
+    "inner_folds": 3,
+    "partition": "training rows only",
+    "threshold_rule": "maximum F1 on inner-fold out-of-sample scores",
+    "mean_average_precision": 0.143697961219425,
+    "std_average_precision": 0.013249802510894216,
+    "mean_f1_at_inner_threshold": 0.22168905389257137,
+    "std_f1_at_inner_threshold": 0.019417408257063538,
+    "note": "Nested CV AP is a less optimistic estimate than the single validation split AP.",
+    "threshold_note": "AP does not depend on the threshold, so only the F1 values reflect threshold selection."
+  },
+  "test_metrics": {
+    "logistic_regression": {
+      "decision_threshold_for_Y": 0.675272255320732,
+      "precision_Y": 0.15,
+      "recall_Y": 0.5217391304347826,
+      "f1_Y": 0.23300970873786409,
+      "roc_auc": 0.7924904214559387,
+      "pr_auc_average_precision": 0.1507916639650892,
+      "accuracy": 0.795071335927367,
+      "confusion_matrix": {
+        "labels": [
+          0,
+          1
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            1767,
+            408
+          ],
+          [
+            66,
+            72
+          ]
+        ]
+      },
+      "predicted_counts": {
+        "0": 1833,
+        "1": 480
+      }
+    },
+    "majority_class": {
+      "decision_threshold_for_Y": 1.0,
+      "precision_Y": 0.0,
+      "recall_Y": 0.0,
+      "f1_Y": 0.0,
+      "roc_auc": 0.5,
+      "pr_auc_average_precision": 0.05966277561608301,
+      "accuracy": 0.940337224383917,
+      "confusion_matrix": {
+        "labels": [
+          0,
+          1
+        ],
+        "rows_actual_columns_predicted": [
+          [
+            2175,
+            0
+          ],
+          [
+            138,
+            0
+          ]
+        ]
+      },
+      "predicted_counts": {
+        "0": 2313
+      }
+    }
+  },
+  "metric_notes": {
+    "positive_label": 1,
+    "pr_auc_average_precision": "Average precision, a step-wise precision-recall summary computed from scores.",
+    "confusion_matrix": "Rows are actual 0, 1; columns are predicted 0, 1.",
+    "accuracy": "Included for context; it can look high when the majority 0 class dominates while 1 cases are missed."
+  },
+  "model_trained": true,
+  "test_used_for_fitting_or_threshold_selection": false,
+  "saved_pipeline": "data/processed/fraud_logistic_pipeline.joblib"
+}

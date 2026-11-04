@@ -1,0 +1,482 @@
+{
+  "status": "exploratory classroom specialist comparison",
+  "target": "FraudFound_P",
+  "target_semantics_note": "The meaning of FraudFound_P is undocumented. Models predict only that recorded label; they do not establish confirmed or real-world fraud detection.",
+  "source_csv": "data/raw/fraud_oracle.csv",
+  "source_sha256": "8b6aa59764ef4f8b058598d3e8f325ef3623f52f4b1cd4ef946baebb5ccfa9a6",
+  "split_manifest": "data/processed/fraud_split_manifest.json",
+  "split_seed": 42,
+  "partitions_used": {
+    "train_rows": 10794,
+    "validation_rows": 2313,
+    "test_used": false
+  },
+  "routing_field": {
+    "column": "VehicleCategory",
+    "use": "select specialist only; excluded from every pipeline input"
+  },
+  "candidate_groups": {
+    "full": {
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "WeekOfMonthClaimed",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek",
+        "MonthClaimed",
+        "DayOfWeekClaimed"
+      ],
+      "rationale": "Reference group: every configured input, with VehicleCategory reserved for routing."
+    },
+    "no_claim_timing": {
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "rationale": "Removes the claim-timing fields whose availability at prediction time is unverified."
+    },
+    "no_calendar": {
+      "features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "Days_Policy_Claim",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy"
+      ],
+      "rationale": "Removes calendar fields to test whether the remaining policy and incident inputs hold up without them."
+    }
+  },
+  "model_family_and_settings": {
+    "family": "RandomForestClassifier",
+    "n_estimators": 100,
+    "max_depth": 12,
+    "min_samples_leaf": 5,
+    "class_weight": "balanced_subsample",
+    "random_state": 42
+  },
+  "threshold_rule": "For each candidate, validation-only maximum F1 for the positive label; highest threshold breaks F1 ties.",
+  "ranking_rule": "Within each vehicle category, highest validation average precision; validation F1 breaks a tie.",
+  "preprocessing_and_fit_partition": "Each candidate preprocessing pipeline and classifier fit only on that category's training rows.",
+  "feature_timing_note": "Timing and availability of every feature are unverified; candidate reduction is not a claim of screening-time availability.",
+  "excluded_features": [
+    "FraudFound_P",
+    "MaritalStatus",
+    "PolicyNumber",
+    "RepNumber",
+    "Sex",
+    "VehicleCategory"
+  ],
+  "minimum_example_floor": {
+    "training_per_class": 100,
+    "validation_per_class": 30,
+    "note": "A modest run-safety floor only; passing it does not imply statistical reliability."
+  },
+  "skipped_categories": {
+    "Sport": {
+      "training_counts": {
+        "0": 3751,
+        "1": 53
+      },
+      "validation_counts": {
+        "0": 745,
+        "1": 16
+      },
+      "reason": "Below the floor of 100 training or 30 validation examples per class."
+    },
+    "Utility": {
+      "training_counts": {
+        "0": 228,
+        "1": 36
+      },
+      "validation_counts": {
+        "0": 62,
+        "1": 4
+      },
+      "reason": "Below the floor of 100 training or 30 validation examples per class."
+    }
+  },
+  "specialists": {
+    "Sedan": {
+      "training_counts": {
+        "0": 6169,
+        "1": 557
+      },
+      "validation_counts": {
+        "0": 1367,
+        "1": 119
+      },
+      "candidate_groups": {
+        "full": {
+          "features": [
+            "Age",
+            "Deductible",
+            "DriverRating",
+            "WeekOfMonth",
+            "WeekOfMonthClaimed",
+            "Year",
+            "VehiclePrice",
+            "Days_Policy_Accident",
+            "Days_Policy_Claim",
+            "PastNumberOfClaims",
+            "AgeOfVehicle",
+            "AgeOfPolicyHolder",
+            "NumberOfSuppliments",
+            "AddressChange_Claim",
+            "NumberOfCars",
+            "fault_policy_holder",
+            "no_police_report",
+            "no_witness",
+            "high_driver_rating",
+            "address_changed_recently",
+            "Make",
+            "AccidentArea",
+            "Fault",
+            "PolicyType",
+            "PoliceReportFiled",
+            "WitnessPresent",
+            "AgentType",
+            "BasePolicy",
+            "Month",
+            "DayOfWeek",
+            "MonthClaimed",
+            "DayOfWeekClaimed"
+          ],
+          "feature_group_rationale": "Reference group: every configured input, with VehicleCategory reserved for routing.",
+          "timing": "unverified for every feature",
+          "validation_metrics": {
+            "average_precision": 0.22335238470844965,
+            "precision_Y": 0.20689655172413793,
+            "recall_Y": 0.5042016806722689,
+            "f1_Y": 0.293398533007335,
+            "selected_threshold_for_Y": 0.436320118706075,
+            "validation_rows_predicted_Y": 290,
+            "validation_rows_predicted_Y_percent": 19.515477792732167,
+            "validation_false_positive_count": 230,
+            "validation_rows": 1486
+          }
+        },
+        "no_claim_timing": {
+          "features": [
+            "Age",
+            "Deductible",
+            "DriverRating",
+            "WeekOfMonth",
+            "Year",
+            "VehiclePrice",
+            "Days_Policy_Accident",
+            "PastNumberOfClaims",
+            "AgeOfVehicle",
+            "AgeOfPolicyHolder",
+            "NumberOfSuppliments",
+            "AddressChange_Claim",
+            "NumberOfCars",
+            "fault_policy_holder",
+            "no_police_report",
+            "no_witness",
+            "high_driver_rating",
+            "address_changed_recently",
+            "Make",
+            "AccidentArea",
+            "Fault",
+            "PolicyType",
+            "PoliceReportFiled",
+            "WitnessPresent",
+            "AgentType",
+            "BasePolicy",
+            "Month",
+            "DayOfWeek"
+          ],
+          "feature_group_rationale": "Removes the claim-timing fields whose availability at prediction time is unverified.",
+          "timing": "unverified for every feature",
+          "validation_metrics": {
+            "average_precision": 0.2481142802651041,
+            "precision_Y": 0.25,
+            "recall_Y": 0.35294117647058826,
+            "f1_Y": 0.2926829268292683,
+            "selected_threshold_for_Y": 0.5090988763238528,
+            "validation_rows_predicted_Y": 168,
+            "validation_rows_predicted_Y_percent": 11.305518169582772,
+            "validation_false_positive_count": 126,
+            "validation_rows": 1486
+          }
+        },
+        "no_calendar": {
+          "features": [
+            "Age",
+            "Deductible",
+            "DriverRating",
+            "VehiclePrice",
+            "Days_Policy_Accident",
+            "Days_Policy_Claim",
+            "PastNumberOfClaims",
+            "AgeOfVehicle",
+            "AgeOfPolicyHolder",
+            "NumberOfSuppliments",
+            "AddressChange_Claim",
+            "NumberOfCars",
+            "fault_policy_holder",
+            "no_police_report",
+            "no_witness",
+            "high_driver_rating",
+            "address_changed_recently",
+            "Make",
+            "AccidentArea",
+            "Fault",
+            "PolicyType",
+            "PoliceReportFiled",
+            "WitnessPresent",
+            "AgentType",
+            "BasePolicy"
+          ],
+          "feature_group_rationale": "Removes calendar fields to test whether the remaining policy and incident inputs hold up without them.",
+          "timing": "unverified for every feature",
+          "validation_metrics": {
+            "average_precision": 0.21261581100923874,
+            "precision_Y": 0.21138211382113822,
+            "recall_Y": 0.4369747899159664,
+            "f1_Y": 0.28493150684931506,
+            "selected_threshold_for_Y": 0.538653345314232,
+            "validation_rows_predicted_Y": 246,
+            "validation_rows_predicted_Y_percent": 16.55450874831763,
+            "validation_false_positive_count": 194,
+            "validation_rows": 1486
+          }
+        }
+      },
+      "selected_feature_group": "no_claim_timing",
+      "selected_features": [
+        "Age",
+        "Deductible",
+        "DriverRating",
+        "WeekOfMonth",
+        "Year",
+        "VehiclePrice",
+        "Days_Policy_Accident",
+        "PastNumberOfClaims",
+        "AgeOfVehicle",
+        "AgeOfPolicyHolder",
+        "NumberOfSuppliments",
+        "AddressChange_Claim",
+        "NumberOfCars",
+        "fault_policy_holder",
+        "no_police_report",
+        "no_witness",
+        "high_driver_rating",
+        "address_changed_recently",
+        "Make",
+        "AccidentArea",
+        "Fault",
+        "PolicyType",
+        "PoliceReportFiled",
+        "WitnessPresent",
+        "AgentType",
+        "BasePolicy",
+        "Month",
+        "DayOfWeek"
+      ],
+      "feature_retention_basis": [
+        {
+          "column": "Age",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Deductible",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "DriverRating",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "WeekOfMonth",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Year",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "VehiclePrice",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Days_Policy_Accident",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "PastNumberOfClaims",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "AgeOfVehicle",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "AgeOfPolicyHolder",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "NumberOfSuppliments",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "AddressChange_Claim",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "NumberOfCars",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "fault_policy_holder",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "no_police_report",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "no_witness",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "high_driver_rating",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "address_changed_recently",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Make",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "AccidentArea",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Fault",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "PolicyType",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "PoliceReportFiled",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "WitnessPresent",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "AgentType",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "BasePolicy",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "Month",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        },
+        {
+          "column": "DayOfWeek",
+          "reason": "Retained because it belongs to no_claim_timing, the candidate group with the highest validation average precision (0.248114) for this vehicle category. Grouped comparisons do not isolate individual feature effects."
+        }
+      ],
+      "selected_validation_metrics": {
+        "average_precision": 0.2481142802651041,
+        "precision_Y": 0.25,
+        "recall_Y": 0.35294117647058826,
+        "f1_Y": 0.2926829268292683,
+        "selected_threshold_for_Y": 0.5090988763238528,
+        "validation_rows_predicted_Y": 168,
+        "validation_rows_predicted_Y_percent": 11.305518169582772,
+        "validation_false_positive_count": 126,
+        "validation_rows": 1486
+      },
+      "timing_note": "Availability timing is unverified for every feature.",
+      "test_used": false
+    }
+  },
+  "test_partition_used_for_fit_selection_threshold_or_metrics": false,
+  "artifacts": {
+    "model_bundle": "data/processed/fraud_vehicle_specialists_v1.joblib",
+    "comparison_report": "data/processed/fraud_vehicle_specialists_v1.json"
+  }
+}
